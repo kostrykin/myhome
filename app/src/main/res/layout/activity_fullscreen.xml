@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/fullscreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/space_horizontal_small"
+        tools:context=".FullscreenActivity">
+
+        <LinearLayout
+            android:layout_width="@dimen/weather_bar_width"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/space_horizontal_medium"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="TextView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
+
+            <RelativeLayout
+                android:id="@+id/weather_current"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <include
+                    android:id="@+id/current_weather_icon"
+                    layout="@layout/weather_icon"
+                    android:layout_width="@dimen/ic_weather_icon_large"
+                    android:layout_height="@dimen/ic_weather_icon_large"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true" />
+
+                <TextView
+                    android:id="@+id/current_weather_temp_major"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/current_weather_icon"
+                    android:maxLines="1"
+                    android:text="12 °C"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+
+                <TextView
+                    android:id="@+id/current_weather_temp_minor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@+id/current_weather_temp_major"
+                    android:layout_alignBottom="@id/current_weather_icon"
+                    android:maxLines="1"
+                    android:text="10 °C"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/space_vertical_medium"
+                android:layout_marginBottom="@dimen/space_vertical_medium"
+                android:background="@color/foregroundSecondary" />
+
+            <LinearLayout
+                android:id="@+id/weather_forecasts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/last_weather_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_vertical_small"
+                android:text="TextView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/foregroundSecondary"
+                tools:text="@string/last_weather_update" />
+
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/rooms"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <include layout="@layout/layout_room" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:onClick="turnAllOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/backgroundSecondary"
+        app:srcCompat="@android:drawable/ic_lock_power_off"
+        android:clickable="true" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

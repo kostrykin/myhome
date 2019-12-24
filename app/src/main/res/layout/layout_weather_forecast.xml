@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:maxLines="1"
+        android:layout_toLeftOf="@+id/forecast_weather_icon"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <include
+        android:id="@+id/forecast_weather_icon"
+        layout="@layout/weather_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_width="@dimen/ic_weather_icon_small"
+        android:layout_height="@dimen/ic_weather_icon_small" />
+
+    <TextView
+        android:id="@+id/forecast_weather_temp_major"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/forecast_weather_icon"
+        android:text="12 °C"
+        android:maxLines="1"
+        android:textColor="@color/foregroundPrimary"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/forecast_weather_temp_minor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/forecast_weather_temp_major"
+        android:layout_below="@id/forecast_weather_temp_major"
+        android:text="10 °C"
+        android:maxLines="1"
+        android:textColor="@color/foregroundSecondary"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+</RelativeLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="space_horizontal_small">10dp</dimen>
+    <dimen name="space_horizontal_medium">20dp</dimen>
+    <dimen name="ic_weather_icon_large">100dp</dimen>
+    <dimen name="ic_weather_icon_small">65dp</dimen>
+    <dimen name="weather_bar_width">300dp</dimen>
+    <dimen name="space_vertical_medium">20dp</dimen>
+    <dimen name="space_vertical_small">10dp</dimen>
+</resources>
