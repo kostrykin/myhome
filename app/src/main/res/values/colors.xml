@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="foregroundPrimary">#000000</color>
-    <color name="foregroundSecondary">#4d4d4d</color>
-    <color name="accent">#D81B60</color>
-    <color name="backgroundPrimary">#ffffff</color>
-    <color name="backgroundSecondary">#d6d7d7</color>
+    <color name="foreground1">#000000</color>
+    <color name="foreground2">#4d4d4d</color>
+    <color name="foreground3">#6c6c6c</color>
+    <color name="background1">#bbbbbb</color>
+    <color name="background2">#d6d7d7</color>
 
+    <color name="accent">#D81B60</color>
     <color name="black_overlay">#66000000</color>
 </resources>

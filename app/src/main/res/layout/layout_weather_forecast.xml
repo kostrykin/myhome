@@ -9,6 +9,7 @@
         android:text="TextView"
         android:maxLines="1"
         android:layout_toLeftOf="@+id/forecast_weather_icon"
+        android:textColor="@color/foreground2"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <include
@@ -26,7 +27,7 @@
         android:layout_toEndOf="@+id/forecast_weather_icon"
         android:text="12 °C"
         android:maxLines="1"
-        android:textColor="@color/foregroundPrimary"
+        android:textColor="@color/foreground1"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <TextView
@@ -37,7 +38,7 @@
         android:layout_below="@id/forecast_weather_temp_major"
         android:text="10 °C"
         android:maxLines="1"
-        android:textColor="@color/foregroundSecondary"
+        android:textColor="@color/foreground2"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 </RelativeLayout>

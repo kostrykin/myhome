@@ -3,15 +3,15 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/foregroundPrimary</item>
-        <item name="colorPrimaryDark">@color/foregroundSecondary</item>
+        <item name="colorPrimary">@color/foreground1</item>
+        <item name="colorPrimaryDark">@color/foreground2</item>
         <item name="colorAccent">@color/accent</item>
     </style>
 
     <style name="FullscreenTheme" parent="AppTheme">
         <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
         <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowBackground">@color/backgroundPrimary</item>
+        <item name="android:windowBackground">@color/background1</item>
         <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
         <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
     </style>

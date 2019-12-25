@@ -26,6 +26,8 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:text="TextView"
+                android:textColor="@color/foreground3"
+                android:textSize="75dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
 
             <RelativeLayout
@@ -50,6 +52,7 @@
                     android:layout_toEndOf="@+id/current_weather_icon"
                     android:maxLines="1"
                     android:text="12 °C"
+                    android:textColor="@color/foreground1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
                 <TextView
@@ -60,6 +63,7 @@
                     android:layout_alignBottom="@id/current_weather_icon"
                     android:maxLines="1"
                     android:text="10 °C"
+                    android:textColor="@color/foreground2"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             </RelativeLayout>
@@ -69,7 +73,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/space_vertical_medium"
                 android:layout_marginBottom="@dimen/space_vertical_medium"
-                android:background="@color/foregroundSecondary" />
+                android:background="@color/foreground2" />
 
             <LinearLayout
                 android:id="@+id/weather_forecasts"
@@ -87,7 +91,7 @@
                 android:layout_marginTop="@dimen/space_vertical_small"
                 android:text="TextView"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/foregroundSecondary"
+                android:textColor="@color/foreground2"
                 tools:text="@string/last_weather_update" />
 
         </LinearLayout>
@@ -114,7 +118,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        app:backgroundTint="@color/backgroundSecondary"
+        app:backgroundTint="@color/background2"
         app:srcCompat="@android:drawable/ic_lock_power_off"
         android:clickable="true" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

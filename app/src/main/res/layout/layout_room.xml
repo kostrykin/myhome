@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/space_horizontal_medium"
             android:text="@string/dummy_room1"
+            android:textColor="@color/foreground3"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
         <LinearLayout
