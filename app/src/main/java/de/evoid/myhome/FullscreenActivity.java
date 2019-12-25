@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -74,13 +75,6 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
         weatherForecastView = mContentView.findViewById(R.id.weather_forecasts);
         lastWeatherUpdateView = mContentView.findViewById(R.id.last_weather_update);
 
-        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-
         weather = new OpenWeatherMap(this);
         weather.setLocation(getResources().getString(R.string.config_weather_location));
         weather.setCelsiusPreference(true);
@@ -100,6 +94,13 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
     @Override
     protected void onStart() {
         super.onStart();
+
+        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         final int weatherUpdateInterval = getResources().getInteger(R.integer.config_weather_update_interval);
         clock = new BroadcastReceiver() {
@@ -246,16 +247,16 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
 
         switch (entry.accountCloudiness()) {
             case CLEAR:
-                currentWeatherClouds.setImageDrawable(getDrawable(R.drawable.ic_weather_clouds_clear));
+                currentWeatherClouds.setImageResource(R.drawable.ic_weather_clouds_clear);
                 break;
             case SCATTERED:
-                currentWeatherClouds.setImageDrawable(getDrawable(R.drawable.ic_weather_clouds_scattered));
+                currentWeatherClouds.setImageResource(R.drawable.ic_weather_clouds_scattered);
                 break;
             case BROKEN:
-                currentWeatherClouds.setImageDrawable(getDrawable(R.drawable.ic_weather_clouds_broken));
+                currentWeatherClouds.setImageResource(R.drawable.ic_weather_clouds_broken);
                 break;
             case COVERED:
-                currentWeatherClouds.setImageDrawable(getDrawable(R.drawable.ic_weather_clouds_covered));
+                currentWeatherClouds.setImageResource(R.drawable.ic_weather_clouds_covered);
                 break;
         }
 
@@ -264,11 +265,11 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
                 currentWeatherWind.setVisibility(View.INVISIBLE);
                 break;
             case LIGHT:
-                currentWeatherWind.setImageDrawable(getDrawable(R.drawable.ic_weather_wind_light));
+                currentWeatherWind.setImageResource(R.drawable.ic_weather_wind_light);
                 currentWeatherWind.setVisibility(View.VISIBLE);
                 break;
             case STRONG:
-                currentWeatherWind.setImageDrawable(getDrawable(R.drawable.ic_weather_wind_strong));
+                currentWeatherWind.setImageResource(R.drawable.ic_weather_wind_strong);
                 currentWeatherWind.setVisibility(View.VISIBLE);
                 break;
         }
@@ -278,15 +279,15 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
                 currentWeatherRain.setVisibility(View.INVISIBLE);
                 break;
             case LIGHT:
-                currentWeatherRain.setImageDrawable(getDrawable(R.drawable.ic_weather_rain_light));
+                currentWeatherRain.setImageResource(R.drawable.ic_weather_rain_light);
                 currentWeatherRain.setVisibility(View.VISIBLE);
                 break;
             case MEDIUM:
-                currentWeatherRain.setImageDrawable(getDrawable(R.drawable.ic_weather_rain_medium));
+                currentWeatherRain.setImageResource(R.drawable.ic_weather_rain_medium);
                 currentWeatherRain.setVisibility(View.VISIBLE);
                 break;
             case HEAVY:
-                currentWeatherRain.setImageDrawable(getDrawable(R.drawable.ic_weather_rain_heavy));
+                currentWeatherRain.setImageResource(R.drawable.ic_weather_rain_heavy);
                 currentWeatherRain.setVisibility(View.VISIBLE);
                 break;
         }
@@ -296,15 +297,15 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
                 currentWeatherSnow.setVisibility(View.INVISIBLE);
                 break;
             case LIGHT:
-                currentWeatherSnow.setImageDrawable(getDrawable(R.drawable.ic_weather_snow_light));
+                currentWeatherSnow.setImageResource(R.drawable.ic_weather_snow_light);
                 currentWeatherSnow.setVisibility(View.VISIBLE);
                 break;
             case MEDIUM:
-                currentWeatherSnow.setImageDrawable(getDrawable(R.drawable.ic_weather_snow_medium));
+                currentWeatherSnow.setImageResource(R.drawable.ic_weather_snow_medium);
                 currentWeatherSnow.setVisibility(View.VISIBLE);
                 break;
             case HEAVY:
-                currentWeatherSnow.setImageDrawable(getDrawable(R.drawable.ic_weather_snow_heavy));
+                currentWeatherSnow.setImageResource(R.drawable.ic_weather_snow_heavy);
                 currentWeatherSnow.setVisibility(View.VISIBLE);
                 break;
         }
