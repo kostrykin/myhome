@@ -40,6 +40,13 @@ public class Scene {
         for (Map.Entry<Integer, JSONObject> entry : settings.entrySet()) {
             final int bulbId = entry.getKey();
             final JSONObject bulbSettings = entry.getValue();
+            try {
+                if (bulbSettings.getInt(TradfriConstants.ONOFF) == 0) {
+                    bulbSettings.remove(TradfriConstants.DIMMER);
+                }
+            } catch (JSONException ex) {
+                throw new TradfriException(ex);
+            }
             LightBulb.set(gateway, bulbId, bulbSettings);
         }
     }
