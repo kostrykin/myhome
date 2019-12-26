@@ -7,17 +7,20 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -56,6 +59,8 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
     private TextView currentWeatherTempMinor;
     private LinearLayout weatherForecastView;
     private TextView lastWeatherUpdateView;
+    private View workingIndicator;
+    private FloatingActionButton allOffButton;
     private long lastWeatherUpdateTimestamp;
 
     @Override
@@ -74,6 +79,10 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
         currentWeatherView.setVisibility(View.INVISIBLE);
         weatherForecastView = mContentView.findViewById(R.id.weather_forecasts);
         lastWeatherUpdateView = mContentView.findViewById(R.id.last_weather_update);
+
+        allOffButton = findViewById(R.id.all_off_button);
+        workingIndicator = findViewById(R.id.working_indicator);
+        workingIndicator.setVisibility(View.GONE);
 
         weather = new OpenWeatherMap(this);
         weather.setLocation(getResources().getString(R.string.config_weather_location));
@@ -146,8 +155,17 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
                 .show();
     }
 
-    private abstract static class TradfriTask extends AsyncTask<Void, Void, Void> {
+    private abstract class TradfriTask extends AsyncTask<Void, Void, Void> {
         private Exception ex = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            allOffButton.setEnabled(false);
+            workingIndicator.setVisibility(View.VISIBLE);
+            workingIndicator.setAlpha(0);
+            workingIndicator.animate().alpha(1).setDuration(1000);
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -162,11 +180,13 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
         protected abstract void doTradfriTask() throws TradfriException;
 
         protected void onPostExecute(Void result) {
+            workingIndicator.setVisibility(View.GONE);
+            allOffButton.setEnabled(true);
             if (this.ex != null) throw new RuntimeException(ex);
         }
     }
 
-    private static class ActivateSceneTask extends TradfriTask {
+    private class ActivateSceneTask extends TradfriTask {
         private final Scene scene;
 
         public ActivateSceneTask(Scene scene) {
@@ -178,7 +198,7 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
         }
     }
 
-    private static class AllOffTask extends TradfriTask {
+    private class AllOffTask extends TradfriTask {
         private final TradfriGateway tradfri;
 
         public AllOffTask(TradfriGateway tradfri) {

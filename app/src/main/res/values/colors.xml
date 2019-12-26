@@ -3,7 +3,7 @@
     <color name="foreground1">#000000</color>
     <color name="foreground2">#4d4d4d</color>
     <color name="foreground3">#6c6c6c</color>
-    <color name="background1">#bbbbbb</color>
+    <color name="background1">#BBBBBB</color>
     <color name="background2">#d6d7d7</color>
 
     <color name="accent">#D81B60</color>
