@@ -20,7 +20,9 @@ import java.util.logging.Logger;
 
 public class TradfriGateway {
 
-    private static final int MAX_RETRY_COUNT = 1;
+    private static final int MAX_RETRY_COUNT = 4;
+    private static final int WAIT_BEFORE_RETRY = 100;
+    private static final int WAIT_FACTOR_PER_RETRY = 5;
 
     private final String gatewayIp;
     private final String securityKey;
@@ -78,6 +80,10 @@ public class TradfriGateway {
         get(".well-known/core");
     }
 
+    private void waitBeforeRetry(int retryCount) throws InterruptedException {
+        Thread.sleep(WAIT_BEFORE_RETRY * (long) Math.pow(WAIT_FACTOR_PER_RETRY, retryCount));
+    }
+
     public CoapResponse get(String path) throws TradfriException {
         Logger logger = Logger.getLogger(TradfriGateway.class.getName());
         logger.log(Level.INFO, "GET: " + "coaps://" + gatewayIp + "/" + path);
@@ -91,7 +97,7 @@ public class TradfriGateway {
                 response = client.get(1);
                 if (response != null && response.isSuccess()) return response;
                 if (response == null && retryCount < MAX_RETRY_COUNT) {
-                    ++retryCount;
+                    waitBeforeRetry(retryCount++);
                     logger.log(Level.WARNING, "Restarting gateway connection (" + retryCount + ")");
                     initCoap();
                     continue;
@@ -118,7 +124,7 @@ public class TradfriGateway {
                 response = client.put(payload, MediaTypeRegistry.TEXT_PLAIN);
                 if (response != null && response.isSuccess()) break;
                 if (response == null && retryCount < MAX_RETRY_COUNT) {
-                    ++retryCount;
+                    waitBeforeRetry(retryCount++);
                     logger.log(Level.WARNING, "Restarting gateway connection (" + retryCount + ")");
                     initCoap();
                     continue;
