@@ -22,6 +22,7 @@ import androidx.appcompat.view.ContextThemeWrapper;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -66,7 +67,6 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_fullscreen);
 
         mContentView = findViewById(R.id.fullscreen);
@@ -213,8 +213,12 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
         }
     }
 
+    public void activateScene(String sceneName, @Nullable String roomName) {
+    }
+
     private void populateRooms() {
         roomsView.removeAllViews();
+        PhoneticResolver.instance.options.clear();
         final FullscreenActivity context = this;
         ContextThemeWrapper sceneButtonStyle = new ContextThemeWrapper(this, R.style.SceneButton);
         try {
@@ -238,12 +242,21 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
                     sceneButton.setText(scene.name);
                     scenesView.addView(sceneButton);
 
+                    Runnable action = new Runnable() {
+                        @Override
+                        public void run() {
+                            new ActivateSceneTask(scene).execute();
+                        }
+                    };
                     sceneButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            new ActivateSceneTask(scene).execute();
+                            action.run();
                         }
                     });
+
+                    PhoneticResolver.instance.addOption(scene.name, action);
+                    PhoneticResolver.instance.addOption(scene.name + " in " + room.name, action);
                 }
 
                 roomsView.addView(roomView);
@@ -257,6 +270,12 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
         if (tradfri != null) {
             new AllOffTask(tradfri).execute();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PhoneticResolver.instance.options.clear();
     }
 
     private void setupWeatherIcon(View icon, WeatherForecast.Entry entry) {
