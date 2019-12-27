@@ -16,6 +16,7 @@ public class HttpService extends Service {
     private Application app;
     private String authKey;
     private Handler handler = new Handler();
+    private Server server;
 
     @Override
     public void onCreate() {
@@ -30,13 +31,20 @@ public class HttpService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Server server = new Server(8080);
+        server = new Server(8080);
         try {
             server.start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        server.stop();
+        server.closeAllConnections();
     }
 
     private class Server extends NanoHTTPD {
