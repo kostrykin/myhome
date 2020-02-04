@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="config_tradfri_gateway_address">192.168.0.2</string>
-    <string name="config_tradfri_security_key">XXXXXXXXXXXXXXXX</string><!-- read off from the bottom of your gateway device -->
-    <string name="config_weather_location">Heidelberg</string>
-    <string name="config_weather_api_key">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</string><!-- see https://openweathermap.org/api -->
-    <string name="config_httpserver_auth_key">734BBF58D7D1FDE2E14D25991A5D66</string><!-- set this to anything you want -->
+    <string name="config_tradfri_security_key">xxxxxxxxxxxxxxxx</string><!-- read off from the bottom of your gateway device -->
+    <string name="config_weather_location">Heidelberg,de</string>
+    <string name="config_weather_api_key">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string><!-- see https://openweathermap.org/api -->
+    <string name="config_httpserver_auth_key">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string><!-- set this to anything you want -->
     <integer name="config_weather_forecast_entries">4</integer>
     <integer name="config_weather_update_interval">15<!-- minutes --></integer>
+    <string name="config_short_time_format">H:mm</string>
 </resources>

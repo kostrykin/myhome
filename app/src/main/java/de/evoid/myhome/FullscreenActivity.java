@@ -7,12 +7,10 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -22,8 +20,8 @@ import androidx.appcompat.view.ContextThemeWrapper;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.ref.WeakReference;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -40,8 +38,6 @@ import de.evoid.weather.WeatherException;
 import de.evoid.weather.WeatherForecast;
 import de.evoid.weather.WeatherListener;
 import de.evoid.weather.WeatherProvider;
-
-import static java.text.DateFormat.getTimeInstance;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -63,11 +59,14 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
     private View workingIndicator;
     private FloatingActionButton allOffButton;
     private long lastWeatherUpdateTimestamp;
+    private String shortTimeFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
+
+        shortTimeFormat = getResources().getString(R.string.config_short_time_format);
 
         mContentView = findViewById(R.id.fullscreen);
         roomsView = mContentView.findViewById(R.id.rooms);
@@ -142,7 +141,7 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
     }
 
     private void updateTimeView() {
-        DateFormat timeFormat = getTimeInstance(DateFormat.SHORT);
+        DateFormat timeFormat = getShortTimeFormat();
         timeView.setText(timeFormat.format(new Date()));
     }
 
@@ -350,6 +349,10 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
         }
     }
 
+    private DateFormat getShortTimeFormat() {
+        return new SimpleDateFormat(shortTimeFormat);
+    }
+
     @Override
     public void onWeatherForecast(WeatherForecast forecast) {
         currentWeatherTempMajor.setText(forecast.now.temperatureMajor.toString());
@@ -358,7 +361,7 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
         currentWeatherView.setVisibility(View.VISIBLE);
 
         weatherForecastView.removeAllViews();
-        DateFormat timeFormat = getTimeInstance(DateFormat.SHORT);
+        DateFormat timeFormat = getShortTimeFormat();
         for (Map.Entry<Date, WeatherForecast.Entry> item : forecast.items.entrySet()) {
             View entryView = LayoutInflater.from(this).inflate(R.layout.layout_weather_forecast, null);
             TextView weatherTempMajor = entryView.findViewById(R.id.forecast_weather_temp_major);
