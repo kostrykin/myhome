@@ -37,8 +37,8 @@ public class WeatherForecast {
         }
 
         public WindSpeed accountWindSpeed() {
-            if (windSpeed < 40) return WindSpeed.NONE;
-            if (windSpeed < 65) return WindSpeed.LIGHT;
+            if (windSpeed < 30) return WindSpeed.NONE;
+            if (windSpeed < 50) return WindSpeed.LIGHT;
             else return WindSpeed.STRONG;
         }
 
