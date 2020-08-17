@@ -41,6 +41,9 @@ public class Scene {
             final int bulbId = entry.getKey();
             final JSONObject bulbSettings = entry.getValue();
             try {
+                if (!bulbSettings.has(TradfriConstants.ONOFF)) {
+                    throw new TradfriException("Bulb " + bulbId + " is not connected");
+                }
                 if (bulbSettings.getInt(TradfriConstants.ONOFF) == 0) {
                     bulbSettings.remove(TradfriConstants.DIMMER);
                 }
