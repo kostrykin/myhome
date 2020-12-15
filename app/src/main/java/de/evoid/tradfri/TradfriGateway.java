@@ -155,7 +155,7 @@ public class TradfriGateway {
         return rooms;
     }
 
-    public List<LightBulb> dicoverBulbs() throws TradfriException {
+    public List<LightBulb> discoverBulbs() throws TradfriException {
         List<LightBulb> bulbs = new ArrayList<LightBulb>();
         try {
             CoapResponse response = get(TradfriConstants.DEVICES);

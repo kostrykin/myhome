@@ -22,7 +22,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -205,7 +207,7 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
         }
         @Override
         protected void doTradfriTask() throws TradfriException {
-            List<LightBulb> bulbs = tradfri.dicoverBulbs();
+            List<LightBulb> bulbs = tradfri.discoverBulbs();
             for (LightBulb bulb : bulbs) {
                 bulb.setOn(false);
             }
@@ -226,6 +228,36 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
             tradfri = new TradfriGateway(gatewayIp, securityKey);
 
             List<Room> rooms = tradfri.discoverRooms();
+            List<Scene> scenes = new ArrayList<>();
+            for (Room room : rooms) {
+                scenes.addAll(room.discoverScenes());
+            }
+
+            Room defaultRoom = null;
+            for (Room room : rooms) {
+                if (room.isSupergroup) {
+                    defaultRoom = room;
+                }
+            }
+
+            Map<Room, List<Scene>> scenesByRoom = new HashMap<>();
+            for (Room room : rooms) {
+                scenesByRoom.put(room, new ArrayList<>());
+            }
+
+            for (Scene scene : scenes) {
+                Room belongingRoom = defaultRoom;
+                for (Room room : rooms) {
+                    if (scene.belongsToRoom(room)) {
+                        belongingRoom = room;
+                        break;
+                    }
+                }
+                if (belongingRoom != null) {
+                    scenesByRoom.get(belongingRoom).add(scene);
+                }
+            }
+
             for (Room room : rooms) {
                 View roomView = LayoutInflater.from(this).inflate(R.layout.layout_room, null);
                 TextView roomName = (TextView) roomView.findViewById(R.id.room_name);
@@ -234,8 +266,8 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
 
                 roomName.setText(room.name);
 
-                List<Scene> scenes = room.discoverScenes();
-                for (final Scene scene : scenes) {
+                List<Scene> scenesInRoom = scenesByRoom.get(room);
+                for (final Scene scene : scenesInRoom) {
                     if (scene.predefined) continue;
                     Button sceneButton = new Button(sceneButtonStyle);
                     sceneButton.setText(scene.name);

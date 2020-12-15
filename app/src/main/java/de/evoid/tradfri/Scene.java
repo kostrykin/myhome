@@ -23,7 +23,7 @@ public class Scene {
         try {
             JSONObject json = new JSONObject(response.getResponseText());
             name = json.getString(TradfriConstants.NAME);
-            predefined = json.getInt(TradfriConstants.SCENE_PREDEFINED) > 0;
+            predefined = (name.equalsIgnoreCase("alloff"));
             JSONArray settings = json.getJSONArray(TradfriConstants.SCENE_LIGHT_SETTINGS);
             for (int i = 0; i < settings.length(); i++) {
                 JSONObject bulbSettings = settings.getJSONObject(i);
@@ -34,6 +34,13 @@ public class Scene {
         } catch (JSONException ex) {
             throw new TradfriException(ex);
         }
+    }
+
+    public boolean belongsToRoom(Room room) {
+        for (int bulbId : settings.keySet()) {
+            if (!room.objectIds.contains(bulbId)) return false;
+        }
+        return true;
     }
 
     public void activate() throws TradfriException {

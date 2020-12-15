@@ -18,6 +18,7 @@ public class TradfriConstants {
 
     // Top level navigation
     public static final String DEVICES = "15001"; // individual bulbs, remotes, motion sensors, ...
+    public static final String OBJECTS = "15002"; // maybe devices in rooms?
     public static final String GROUPS = "15004"; // also called rooms
     public static final String SCENE = "15005"; // also called moods
     public static final String NOTIFICATIONS = "15006"; // ???
@@ -36,7 +37,7 @@ public class TradfriConstants {
     public static final String ONOFF = "5850"; // "On/Off" in LwM2M registry
     public static final String DIMMER = "5851"; // "Dimmer" in LwM2M registry
     public static final String SCENE_ID = "9039"; // Property of rooms
-    public static final String SCENE_PREDEFINED = "9068"; // Is scene predefined (not custom, boolean)
+    //public static final String SCENE_PREDEFINED = "9068"; // Is scene predefined (obviously deprecated)
     public static final String SCENE_LIGHT_SETTINGS = "15013"; // Light settings (array)
 
     public static final String TRANSITION_TIME = "5712"; // not contained in LwM2M registry

@@ -6,20 +6,35 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Room {
 
     public final TradfriGateway gateway;
     public final int roomId;
     public final String name;
+    public final boolean isSupergroup;
+    public final Collection<Integer> objectIds;
 
     public Room(TradfriGateway gateway, int roomId, CoapResponse response) throws TradfriException {
         this.gateway = gateway;
         this.roomId = roomId;
         try {
             JSONObject json = new JSONObject(response.getResponseText());
-            name = json.getString(TradfriConstants.NAME);
+            String name = json.getString(TradfriConstants.NAME);
+            this.isSupergroup = name.equals("SuperGroup");
+            this.name = (this.isSupergroup ? "" : name);
+            JSONArray roomData = json.getJSONObject(TradfriConstants.HS_ACCESSORY_LINK).getJSONObject(TradfriConstants.OBJECTS).getJSONArray(TradfriConstants.INSTANCE_ID);
+            Set<Integer> objectIds = new TreeSet<Integer>();
+            for (int i = 0; i < roomData.length(); i++) {
+                int objectId = roomData.getInt(i);
+                objectIds.add(objectId);
+            }
+            this.objectIds = Collections.unmodifiableCollection(objectIds);
         } catch (JSONException ex) {
             throw new TradfriException(ex);
         }
