@@ -82,6 +82,11 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
         lastWeatherUpdateView = mContentView.findViewById(R.id.last_weather_update);
 
         allOffButton = findViewById(R.id.all_off_button);
+        allOffButton.setOnLongClickListener(v -> {
+            finishAffinity();
+            return false;
+        });
+
         workingIndicator = findViewById(R.id.working_indicator);
         workingIndicator.setVisibility(View.GONE);
 
