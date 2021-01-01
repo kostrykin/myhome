@@ -272,11 +272,13 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
                 roomName.setText(room.name);
 
                 List<Scene> scenesInRoom = scenesByRoom.get(room);
+                boolean emptyRoom = true;
                 for (final Scene scene : scenesInRoom) {
                     if (scene.predefined) continue;
                     Button sceneButton = new Button(sceneButtonStyle);
                     sceneButton.setText(scene.name);
                     scenesView.addView(sceneButton);
+                    emptyRoom = false;
 
                     Runnable action = new Runnable() {
                         @Override
@@ -295,7 +297,9 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
                     PhoneticResolver.instance.addOption(scene.name + " in " + room.name, action);
                 }
 
-                roomsView.addView(roomView);
+                if (!emptyRoom) {
+                    roomsView.addView(roomView);
+                }
             }
         } catch (TradfriException ex) {
             reportError(ex);
