@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">My Home</string>
+    <string name="last_weather_update">Zuletzt aktualisiert: TIME</string>
 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="dummy_room1">Schlafzimmer</string>
     <string name="dummy_room1_scene_cozy">Cozy</string>
-    <string name="last_weather_update">Zuletzt aktualisiert: TIME</string>
 </resources>

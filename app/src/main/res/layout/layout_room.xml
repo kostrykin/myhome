@@ -33,6 +33,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/dummy_room1_scene_cozy" />
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/room_alloff_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_lock_power_off" />
     </LinearLayout>
 
 </FrameLayout>

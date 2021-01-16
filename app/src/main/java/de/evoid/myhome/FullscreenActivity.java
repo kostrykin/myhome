@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -221,6 +222,25 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
         }
     }
 
+    private class RoomOffTask extends TradfriTask {
+        private final TradfriGateway tradfri;
+        private final Room room;
+
+        public RoomOffTask(TradfriGateway tradfri, Room room) {
+            this.tradfri = tradfri;
+            this.room = room;
+        }
+        @Override
+        protected void doTradfriTask() throws TradfriException {
+            List<LightBulb> bulbs = tradfri.discoverBulbs();
+            for (LightBulb bulb : bulbs) {
+                if (room.objectIds.contains(bulb.getId())) {
+                    bulb.setOn(false);
+                }
+            }
+        }
+    }
+
     public void activateScene(String sceneName, @Nullable String roomName) {
     }
 
@@ -270,9 +290,18 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
                 View roomView = LayoutInflater.from(this).inflate(R.layout.layout_room, null);
                 TextView roomName = (TextView) roomView.findViewById(R.id.room_name);
                 LinearLayout scenesView = (LinearLayout) roomView.findViewById(R.id.room_scenes);
+                ImageButton roomOffButton = (ImageButton) roomView.findViewById(R.id.room_alloff_button);
                 scenesView.removeAllViews();
 
                 roomName.setText(room.name);
+                roomOffButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (tradfri != null) {
+                            new RoomOffTask(tradfri, room).execute();
+                        }
+                    }
+                });
 
                 final List<Scene> scenesInRoom = scenesByRoom.get(room);
                 Collections.sort(scenesInRoom, new Comparator<Scene>() {
