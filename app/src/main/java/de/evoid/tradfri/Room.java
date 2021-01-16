@@ -1,5 +1,7 @@
 package de.evoid.tradfri;
 
+import androidx.annotation.NonNull;
+
 import org.eclipse.californium.core.CoapResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,5 +58,11 @@ public class Room {
 
         }
         return scenes;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

@@ -1,5 +1,7 @@
 package de.evoid.tradfri;
 
+import androidx.annotation.NonNull;
+
 import org.eclipse.californium.core.CoapResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,5 +61,11 @@ public class Scene {
             }
             LightBulb.set(gateway, bulbId, bulbSettings);
         }
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

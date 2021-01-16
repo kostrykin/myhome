@@ -23,6 +23,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -253,6 +255,7 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
             for (Scene scene : scenes) {
                 Room belongingRoom = defaultRoom;
                 for (Room room : rooms) {
+                    if (room.isSupergroup) continue;
                     if (scene.belongsToRoom(room)) {
                         belongingRoom = room;
                         break;
@@ -271,7 +274,13 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
 
                 roomName.setText(room.name);
 
-                List<Scene> scenesInRoom = scenesByRoom.get(room);
+                final List<Scene> scenesInRoom = scenesByRoom.get(room);
+                Collections.sort(scenesInRoom, new Comparator<Scene>() {
+                    @Override
+                    public int compare(Scene s1, Scene s2) {
+                        return s1.name.compareTo(s2.name);
+                    }
+                });
                 boolean emptyRoom = true;
                 for (final Scene scene : scenesInRoom) {
                     if (scene.predefined) continue;
