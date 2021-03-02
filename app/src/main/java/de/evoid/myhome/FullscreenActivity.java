@@ -257,10 +257,11 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
             String securityKey = getResources().getString(R.string.config_tradfri_security_key);
             tradfri = new TradfriGateway(gatewayIp, securityKey);
 
+            List<LightBulb> bulbs = tradfri.discoverBulbs();
             List<Room> rooms = tradfri.discoverRooms();
             List<Scene> scenes = new ArrayList<>();
             for (Room room : rooms) {
-                scenes.addAll(room.discoverScenes());
+                scenes.addAll(room.discoverScenes(bulbs));
             }
 
             Room defaultRoom = null;

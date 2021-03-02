@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public class Scene {
 
     private final Map<Integer, JSONObject> settings = new HashMap<Integer, JSONObject>();
 
-    public Scene(TradfriGateway gateway, int sceneId, CoapResponse response) throws TradfriException {
+    public Scene(TradfriGateway gateway, int sceneId, CoapResponse response, Collection<LightBulb> bulbWhitelist) throws TradfriException {
         this.gateway = gateway;
         this.sceneId = sceneId;
         try {
@@ -31,11 +32,21 @@ public class Scene {
                 JSONObject bulbSettings = settings.getJSONObject(i);
                 int bulbId = bulbSettings.getInt(TradfriConstants.INSTANCE_ID);
                 bulbSettings.remove(TradfriConstants.INSTANCE_ID);
-                this.settings.put(bulbId, bulbSettings);
+                if (isBulbWhitelisted(bulbId, bulbWhitelist)) {
+                    this.settings.put(bulbId, bulbSettings);
+                }
             }
         } catch (JSONException ex) {
             throw new TradfriException(ex);
         }
+    }
+
+    private static boolean isBulbWhitelisted(int bulbId, Collection<LightBulb> bulbWhitelist) {
+        if (bulbWhitelist == null) return true;
+        for (LightBulb bulb : bulbWhitelist) {
+            if (bulb.getId() == bulbId) return true;
+        }
+        return false;
     }
 
     public boolean belongsToRoom(Room room) {

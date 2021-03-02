@@ -42,7 +42,7 @@ public class Room {
         }
     }
 
-    public List<Scene> discoverScenes() throws TradfriException {
+    public List<Scene> discoverScenes(Collection<LightBulb> bulbWhitelist) throws TradfriException {
         List<Scene> scenes = new ArrayList<Scene>();
         try {
             CoapResponse response = gateway.get(TradfriConstants.SCENE + "/" + roomId);
@@ -51,7 +51,7 @@ public class Room {
             for (int i = 0; i < scenesData.length(); i++) {
                 int sceneId = scenesData.getInt(i);
                 response = gateway.get(TradfriConstants.SCENE + "/" + roomId + "/" + sceneId);
-                scenes.add(new Scene(gateway, sceneId, response));
+                scenes.add(new Scene(gateway, sceneId, response, bulbWhitelist));
             }
         } catch (JSONException ex) {
             throw new TradfriException(ex);
