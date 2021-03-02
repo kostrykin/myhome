@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -191,7 +192,9 @@ public class FullscreenActivity extends AppCompatActivity implements WeatherList
         protected void onPostExecute(Void result) {
             workingIndicator.setVisibility(View.GONE);
             allOffButton.setEnabled(true);
-            if (this.ex != null) throw new RuntimeException(ex);
+            if (this.ex != null) {
+                Toast.makeText(Application.getContext(), this.ex.getMessage(), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
