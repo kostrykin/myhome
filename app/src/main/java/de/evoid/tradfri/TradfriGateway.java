@@ -33,7 +33,7 @@ public class TradfriGateway {
     private CoapEndpoint coap = null;
     private Logger logger = Logger.getLogger(TradfriGateway.class.getName());
 
-    public int timeout = 500; // milliseconds
+    public int timeout = 5000; // milliseconds
 
     public TradfriGateway(String gatewayIp, String securityKey) throws TradfriException {
         this.gatewayIp = gatewayIp;
